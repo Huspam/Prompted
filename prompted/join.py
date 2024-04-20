@@ -9,7 +9,7 @@ def index () -> rx.Component:
             rx.form(
                 rx.vstack(
                     rx.input(
-                        id="user_name",
+                        id="username",
                         placeholder="Enter your name",
                         size="3",
                     ),
@@ -23,14 +23,6 @@ def index () -> rx.Component:
                 ),
                 width="100%",
                 on_submit=State.join_game,
-            ),
-            rx.divider(),
-            rx.cond(
-                State.join_processing,
-                rx.chakra.circular_progress(is_indeterminate=True),
-                rx.redirect(
-                    "/game"
-                )
             ),
             width="25em",
             bg="white",
