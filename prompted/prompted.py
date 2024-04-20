@@ -1,18 +1,15 @@
-"""Welcome to Reflex! This file outlines the steps to create a basic app."""
-
 import reflex as rx
-
+from dotenv import load_dotenv
 import os
-
 import openai
 
 _client = None
-
+load_dotenv()
 
 def get_openai_client():
     global _client
     if _client is None:
-        _client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        _client = openai.OpenAI(api_key=os.getenv("OPEN_AI_KEY"))
 
     return _client
 
