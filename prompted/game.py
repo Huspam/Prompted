@@ -16,12 +16,13 @@ import random
 
 def fetch_random_img():
     random_image_filename = random.choice(os.listdir("assets"))
-    return random_image_filename
+    return f"/{random_image_filename}"
 
 def game(): 
+    rand_img = fetch_random_img()
     return rx.center(
         rx.vstack(
-            rx.image(src=fetch_random_img()),
+            rx.image(src=rand_img),
             rx.heading("DALL-E", font_size="1.5em"),
             rx.form(
                 rx.vstack(
