@@ -1,4 +1,5 @@
 import socketio
+import os
 
 NUM_PLAYERS = 0
 USERNAMES = []
@@ -36,11 +37,17 @@ def join_accepted(num, usernames):
 
 
 async def game_start():
-    await sio.emit("gameStart")
+    files = os.listdir('./assets')
+    await sio.emit("gameStart", files)
+
+async def submit_prompt(prompt):
+    await sio.emit("submitPrompt", prompt)    
+
 
 
 @sio.event
 def game_started(img):
+    print(img)
     global PROMPT_IMG
     PROMPT_IMG = img
 

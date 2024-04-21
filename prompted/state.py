@@ -49,7 +49,7 @@ class State(rx.State):
     @rx.background
     async def join_game(self, form_data: dict[str, str]):
         """Join a game session"""
-        username: str = form_data["username"]
+        username : str = form_data["username"]
         try:
             await socket.connect_to_game(username)
             yield rx.redirect("/lobby")
