@@ -45,14 +45,14 @@ def game_started(img):
     PROMPT_IMG = img
 
 
-async def submit_prompt(prompt):
-    await sio.emit("submitPrompt", prompt)
+async def image_send(img_gen):
+    await sio.emit("sendImage", img_gen)
 
 
-@sio.event
-def prompt_submitted(image_url):
-    global IMG_URL
-    IMG_URL = image_url
+# @sio.event
+# def image_sent(image_url):
+#     global IMG_URL
+#     IMG_URL = image_url
 
 
 @sio.event

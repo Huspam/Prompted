@@ -22,7 +22,7 @@ class State(rx.State):
     image_processing = False
     image_made = False
 
-    def get_dalle_result(self, form_data: dict[str, str]):
+    async def get_dalle_result(self, form_data: dict[str, str]):
         prompt_text: str = form_data["prompt_text"]
         self.image_made = False
         self.image_processing = True
@@ -33,7 +33,7 @@ class State(rx.State):
                 prompt=prompt_text, n=1, size="1024x1024"
             )
             self.image_url = response.data[0].url
-            print(self.image_url)
+            await socket.image_send(self.image_url)
             self.image_processing = False
             self.image_made = True
             yield
@@ -44,6 +44,7 @@ class State(rx.State):
     numPlayers = socket.NUM_PLAYERS
     usernames = []
     promptImg = ""
+    gallery = []
 
     @rx.background
     async def join_game(self, form_data: dict[str, str]):
@@ -76,34 +77,27 @@ class State(rx.State):
         while True:
             async with self:
                 if socket.PROMPT_IMG:
-                    # print(socket.PROMPT_IMG)
-                    # self.promptImg = socket.PROMPT_IMG
-                    # print(self.promptImg)
-                    # image_bytes = bytes(self.promptImg)
-                    image_base64 = base64.b64decode(socket.PROMPT_IMG)
-                    # print(image_base64)
-                    with open("prompt.jpg", "wb") as f:
-                        f.write(image_base64)
-                    self.promptImg = "prompt.jpg"
-                    print("\n", self.promptImg)
+                    self.promptImg = "/" + os.listdir("assets")[socket.PROMPT_IMG]
+                    print(self.promptImg)
                     yield rx.redirect("/game")
+                    yield State.check_gallery()
                     break
 
 
-    @rx.background
-    async def submit_prompt(self, prompt):
-        await socket.prompt_submit(prompt)
-        await self.check_image_url()
-        await self.check_gallery()
+    # @rx.background
+    # async def submit_prompt(self, prompt):
+        
+    #     yield State.check_image_url()
+    #     yield State.check_gallery()
 
 
-    @rx.background
-    async def check_image_url(self):
-        while True:
-            async with self:
-                if socket.IMG_URL:
-                    self.image_url = socket.IMG_URL
-                    break
+    # @rx.background
+    # async def check_image_url(self):
+    #     while True:
+    #         async with self:
+    #             if socket.IMG_URL:
+    #                 self.image_url = socket.IMG_URL
+    #                 break
 
 
     @rx.background
@@ -111,12 +105,12 @@ class State(rx.State):
         while True:
             async with self:
                 if socket.GALLERY:
-                    self.gallery = socket.GALLERY
+                    self.gallery = socket.GALLERY.copy()
+                    yield rx.redirect('/voting')
                     break
-
-
-    def get_gallery(self):
-        return self.gallery
     
-    def get_prompt_img(self):
-        return self.promptImg
+    # @rx.background
+    # async def get_prompt_img(self):
+    #     async with self:
+    #         print(self.promptImg)
+    #         return self.promptImg

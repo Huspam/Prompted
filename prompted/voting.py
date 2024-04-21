@@ -2,9 +2,9 @@ import reflex as rx
 from prompted.state import State
 
 def voting():
-    pass
-    # # Function to render the image selection page
-    # images = State.get_gallery()
+    # return
+    # Function to render the image selection page
+    # images = State.gallery
 
     # # Create a list to hold selected images
     # selected_images = []
@@ -27,10 +27,36 @@ def voting():
     # # Display selected images
     # selected_image_elements = [rx.img(src=image_url, style={"border": "2px solid blue"}) for image_url in selected_images]
 
-    # # Return layout for the image selection page
+    # Return layout for the image selection page
     # return rx.div(
     #     rx.h1("Image Selection Page"),
     #     rx.div(*image_elements),
     #     rx.h2("Selected Images:"),
     #     rx.div(*selected_image_elements)
     # )
+    return rx.center(
+        rx.vstack(
+            rx.heading("Vote!", font_size="2em"),
+            rx.divider(),
+            rx.form(
+                rx.grid(
+                    rx.foreach(
+                        State.gallery,
+                        lambda img: rx.card(
+                            rx.image(src=img, width="10em", height="auto")
+                        )
+                    ),
+                )
+            ),
+            height="40em",
+            width="70em",
+            bg="white",
+            padding="2em",
+            align="center",
+            border_radius="2em",
+            spacing="6"
+        ),
+        width="100%",
+        height="100vh",
+        background="radial-gradient(circle at 22% 11%,rgba(62, 180, 137,.20),hsla(0,0%,100%,0) 19%),radial-gradient(circle at 82% 25%,rgba(33,150,243,.18),hsla(0,0%,100%,0) 35%),radial-gradient(circle at 25% 61%,rgba(250, 128, 114, .28),hsla(0,0%,100%,0) 55%)",
+    )
