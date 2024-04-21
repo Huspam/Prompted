@@ -6,9 +6,10 @@ USERNAMES = []
 PROMPT_IMG = None
 IMG_URL = None
 GALLERY = []
+WINNER = None
 
-# SERVER_ADDRESS = 'http://13.57.33.95:3001'
-SERVER_ADDRESS = 'http://localhost:3001'
+SERVER_ADDRESS = 'http://13.57.33.95:3001'
+# SERVER_ADDRESS = 'http://localhost:3001'
 
 # Create your SocketIO client instance
 sio = socketio.AsyncClient()
@@ -66,3 +67,13 @@ async def image_send(img_gen):
 def images_grabbed(img_list):
     global GALLERY
     GALLERY = img_list
+
+
+async def image_vote(image_url):
+    await sio.emit('submitVote', image_url)
+
+
+@sio.event
+async def found_winner(username, image, points):
+    global WINNER
+    WINNER = (username, image, points)
