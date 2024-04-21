@@ -6,15 +6,15 @@ import random
 
 
 
-def fetch_random_img():
-    random_image_filename = random.choice(os.listdir("assets"))
-    return f"/{random_image_filename}"
+# def fetch_random_img():
+#     random_image_filename = random.choice(os.listdir("assets"))
+#     return f"/assets/{random_image_filename}"
 
 def game(): 
-    rand_img = fetch_random_img()
+    # rand_img = fetch_random_img()
     return rx.center(
         rx.vstack(
-            rx.image(src=rand_img),
+            rx.image(src="/Users/solac/Desktop/LAhacks/Prompted/assetsmqdefault.jpg"),
             rx.heading("DALL-E", font_size="1.5em"),
             rx.form(
                 rx.vstack(

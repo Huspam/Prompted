@@ -7,9 +7,7 @@ def lobby () -> rx.Component:
     return rx.center(
         rx.vstack(
             rx.heading("Welcome to the Lobby👋", font_size="1.5em"),
-            rx.vstack(
-                rx.text("Player Count: ", State.numPlayers)
-            ),
+            rx.text("Player Count: ", State.numPlayers),
             rx.button(
                 "Click To Start",
                 id="start_button",
