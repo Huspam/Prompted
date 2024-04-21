@@ -1,10 +1,11 @@
 import socketio
 
-SERVER_ADDRESS = 'http://13.57.33.95:3001'
-# SERVER_ADDRESS = 'http://localhost:3001'
+# SERVER_ADDRESS = 'http://13.57.33.95:3001'
+SERVER_ADDRESS = 'http://localhost:3001'
 
 # Create your SocketIO client instance
 sio = socketio.AsyncClient()
+NUM_PLAYERS = 0
 
 @sio.event
 async def connect():
@@ -22,5 +23,6 @@ async def connect_to_game(username):
 
 
 @sio.event
-def join_accepted(numUsers):
-    print(numUsers)
+def join_accepted(num):
+    global NUM_PLAYERS
+    NUM_PLAYERS = num

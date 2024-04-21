@@ -1,19 +1,27 @@
 import reflex as rx
+import time
 
-from prompted.client_socket import connect_to_game
+import prompted.client_socket as socket
 
 class State(rx.State):
     """The app state."""
 
-    numberOfPlayers = 0
+    numPlayers = socket.NUM_PLAYERS
 
     @rx.background
     async def join_game(self, form_data: dict[str, str]):
         """Join a game session"""
         username: str = form_data["username"]
         try:
-            await connect_to_game(username)
-            # self.numberOfPlayers = join_accepted()
-            yield rx.redirect("/game")
+            await socket.connect_to_game(username)
+            yield rx.redirect("/lobby")
+            yield State.update_players()  
         except Exception as ex:
             yield rx.window_alert(f"Error with joining a game. {ex}")
+
+    @rx.background
+    async def update_players(self):
+        while True:
+            async with self:
+                self.numPlayers = socket.NUM_PLAYERS
+            time.sleep(1)
