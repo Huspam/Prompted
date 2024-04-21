@@ -19,6 +19,7 @@ import random
 #     return f"/assets/{random_image_filename}"
 
 def game(): 
+    # rand_img = fetch_random_img()
     return rx.center(
         rx.vstack(
             rx.image(src="/Users/solac/Desktop/LAhacks/Prompted/assetsmqdefault.jpg"),
