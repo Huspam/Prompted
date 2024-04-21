@@ -5,7 +5,6 @@ SERVER_ADDRESS = 'http://13.57.33.95:3001'
 
 # Create your SocketIO client instance
 sio = socketio.AsyncClient()
-NUM_PLAYERS = 0
 
 @sio.event
 async def connect():
@@ -26,3 +25,13 @@ async def connect_to_game(username):
 def join_accepted(num):
     global NUM_PLAYERS
     NUM_PLAYERS = num
+
+
+async def game_start():
+    await sio.emit("gameStart")
+
+
+@sio.event
+def game_started(img):
+    global PROMPT_IMG
+    PROMPT_IMG = img
