@@ -9,6 +9,10 @@ class State(rx.State):
     numPlayers = socket.NUM_PLAYERS
     promptImg = ""
 
+    @rx.var
+    def promptImage(self):
+        return self.promptImg
+
     @rx.background
     async def join_game(self, form_data: dict[str, str]):
         """Join a game session"""
@@ -43,4 +47,4 @@ class State(rx.State):
                     self.promptImg = socket.PROMPT_IMG
                     yield rx.redirect("/game")
                     break
-            time.sleep(1)
+            # time.sleep(1)

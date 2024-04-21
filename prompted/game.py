@@ -1,5 +1,6 @@
 import reflex as rx
 from dotenv import load_dotenv
+from prompted.state import State
 import os
 import openai
 import random
@@ -22,7 +23,7 @@ def game():
     # rand_img = fetch_random_img()
     return rx.center(
         rx.vstack(
-            rx.image(src="/Users/solac/Desktop/LAhacks/Prompted/assetsmqdefault.jpg"),
+            rx.image(src=f"/{State.promptImage}"),
             rx.heading("DALL-E", font_size="1.5em"),
             rx.form(
                 rx.vstack(
