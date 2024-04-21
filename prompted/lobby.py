@@ -8,16 +8,28 @@ def lobby () -> rx.Component:
         rx.vstack(
             rx.heading("Welcome to the Lobby👋", font_size="1.5em"),
             rx.text("Player Count: ", State.numPlayers),
+            rx.divider(),
             rx.button(
-                "Click To Start",
+                "Start Game",
                 id="start_button",
                 on_click=State.start_game,
-                color_scheme="pink"
+                color_scheme="grass"
             ),
-            width="30em",
+            rx.divider(),
+            rx.vstack(
+                rx.foreach(
+                    State.usernames,
+                    lambda username: rx.text(username)
+                ),
+                align="center"
+            ),
+            height="30em",
+            width="25em",
             bg="white",
-            padding="5em",
+            padding="2em",
             align="center",
+            border_radius="2em",
+            spacing="6"
         ),
         width="100%",
         height="100vh",

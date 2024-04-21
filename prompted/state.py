@@ -2,6 +2,7 @@ import reflex as rx
 import openai
 import os
 from dotenv import load_dotenv
+import base64
 
 import prompted.client_socket as socket
 
@@ -41,6 +42,7 @@ class State(rx.State):
             yield rx.window_alert(f"Error with OpenAI Execution. {ex}")
     
     numPlayers = socket.NUM_PLAYERS
+    usernames = []
     promptImg = ""
 
     @rx.background
@@ -61,6 +63,7 @@ class State(rx.State):
         while True:
             async with self:
                 self.numPlayers = socket.NUM_PLAYERS
+                self.usernames = socket.USERNAMES
 
 
     @rx.background
@@ -73,7 +76,16 @@ class State(rx.State):
         while True:
             async with self:
                 if socket.PROMPT_IMG:
-                    self.promptImg = socket.PROMPT_IMG
+                    # print(socket.PROMPT_IMG)
+                    # self.promptImg = socket.PROMPT_IMG
+                    # print(self.promptImg)
+                    # image_bytes = bytes(self.promptImg)
+                    image_base64 = base64.b64decode(socket.PROMPT_IMG)
+                    # print(image_base64)
+                    with open("prompt.jpg", "wb") as f:
+                        f.write(image_base64)
+                    self.promptImg = "prompt.jpg"
+                    print("\n", self.promptImg)
                     yield rx.redirect("/game")
                     break
 
@@ -105,3 +117,6 @@ class State(rx.State):
 
     def get_gallery(self):
         return self.gallery
+    
+    def get_prompt_img(self):
+        return self.promptImg
