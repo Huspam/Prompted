@@ -1,7 +1,7 @@
 import reflex as rx
 from prompted.state import State
 
-def index():
+def voting():
     # return
     # Function to render the image selection page
     # images = State.gallery
