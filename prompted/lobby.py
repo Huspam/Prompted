@@ -13,7 +13,7 @@ def lobby () -> rx.Component:
             rx.button(
                 "Click To Start",
                 id="start_button",
-                on_click=rx.redirect('/game'),
+                on_click=State.start_game,
                 color_scheme="pink"
             ),
             width="30em",
