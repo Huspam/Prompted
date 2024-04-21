@@ -44,7 +44,7 @@ def game():
                     spacing="2",
                 ),
                 width="100%",
-                on_submit=State.submit_prompt
+                on_submit=State.get_dalle_result
             ),
             rx.divider(),
             rx.cond(
