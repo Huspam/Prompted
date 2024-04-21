@@ -1,19 +1,11 @@
 import reflex as rx
+from prompted.state import State 
 from dotenv import load_dotenv
-from prompted.state import State
 import os
-import openai
+
 import random
 
-# _client = None
-# load_dotenv()
 
-# def get_openai_client():
-#     global _client
-#     if _client is None:
-#         _client = openai.OpenAI(api_key=os.getenv("OPEN_AI_KEY"))
-
-#     return _client
 
 # def fetch_random_img():
 #     random_image_filename = random.choice(os.listdir("assets"))
@@ -41,19 +33,19 @@ def game():
                     spacing="2",
                 ),
                 width="100%",
-                # on_submit=State.get_dalle_result,
+                on_submit=State.submit_prompt
             ),
             rx.divider(),
-            # rx.cond(
-            #     State.image_processing,
-            #     rx.chakra.circular_progress(is_indeterminate=True),
-            #     rx.cond(
-            #         State.image_made,
-            #         rx.image(
-            #             src=State.image_url,
-            #         ),
-            #     ),
-            # ),
+            rx.cond(
+                State.image_processing,
+                rx.chakra.circular_progress(is_indeterminate=True),
+                rx.cond(
+                    State.image_made,
+                    rx.image(
+                        src=State.image_url,
+                    ),
+                ),
+            ),
             width="25em",
             bg="white",
             padding="2em",

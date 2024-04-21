@@ -4,8 +4,8 @@ import os
 NUM_PLAYERS = 0
 PROMPT_IMG = None
 
-# SERVER_ADDRESS = 'http://13.57.33.95:3001'
-SERVER_ADDRESS = 'http://localhost:3001'
+SERVER_ADDRESS = 'http://13.57.33.95:3001'
+# SERVER_ADDRESS = 'http://localhost:3001'
 
 # Create your SocketIO client instance
 sio = socketio.AsyncClient()
@@ -34,6 +34,10 @@ def join_accepted(num):
 async def game_start():
     files = os.listdir('./assets')
     await sio.emit("gameStart", files)
+
+async def submit_prompt(prompt):
+    await sio.emit("submitPrompt", prompt)    
+
 
 
 @sio.event
