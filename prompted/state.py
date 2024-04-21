@@ -2,6 +2,7 @@ import reflex as rx
 import openai
 import os
 from dotenv import load_dotenv
+import base64
 
 import prompted.client_socket as socket
 
@@ -41,6 +42,7 @@ class State(rx.State):
             yield rx.window_alert(f"Error with OpenAI Execution. {ex}")
     
     numPlayers = socket.NUM_PLAYERS
+    usernames = []
     promptImg = ""
     username = ""
 
@@ -74,7 +76,7 @@ class State(rx.State):
         while True:
             async with self:
                 self.numPlayers = socket.NUM_PLAYERS
-            # time.sleep(1)
+                self.usernames = socket.USERNAMES
 
 
     @rx.background
@@ -87,7 +89,51 @@ class State(rx.State):
         while True:
             async with self:
                 if socket.PROMPT_IMG:
-                    self.promptImg = socket.PROMPT_IMG
+                    # print(socket.PROMPT_IMG)
+                    # self.promptImg = socket.PROMPT_IMG
+                    # print(self.promptImg)
+                    # image_bytes = bytes(self.promptImg)
+                    image_base64 = base64.b64decode(socket.PROMPT_IMG)
+                    # print(image_base64)
+                    with open("prompt.jpg", "wb") as f:
+                        f.write(image_base64)
+                    self.promptImg = "prompt.jpg"
+                    print("\n", self.promptImg)
                     yield rx.redirect("/game")
                     break
+<<<<<<< HEAD
             # time.sleep(1)
+=======
+
+
+    @rx.background
+    async def submit_prompt(self, prompt):
+        await socket.prompt_submit(prompt)
+        await self.check_image_url()
+        await self.check_gallery()
+
+
+    @rx.background
+    async def check_image_url(self):
+        while True:
+            async with self:
+                if socket.IMG_URL:
+                    self.image_url = socket.IMG_URL
+                    break
+
+
+    @rx.background
+    async def check_gallery(self):
+        while True:
+            async with self:
+                if socket.GALLERY:
+                    self.gallery = socket.GALLERY
+                    break
+
+
+    def get_gallery(self):
+        return self.gallery
+    
+    def get_prompt_img(self):
+        return self.promptImg
+>>>>>>> 3e59ee85bffc69e713140fa86495d839cec4687c

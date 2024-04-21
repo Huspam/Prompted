@@ -1,29 +1,45 @@
 import reflex as rx
 from prompted.state import State 
-from dotenv import load_dotenv
-import os
-
-import random
-
 
 
 # def fetch_random_img():
 #     random_image_filename = random.choice(os.listdir("assets"))
 #     return f"/assets/{random_image_filename}"
 
+class CharacterCount(rx.State):
+    text: str = "0/50"
+
+    def setCount(self, text):
+        self.text = str(len(text)) + "/50"
+
+
 def game(): 
     # rand_img = fetch_random_img()
     return rx.center(
         rx.vstack(
-            rx.image(src=f"/{State.promptImage}"),
-            rx.heading("DALL-E", font_size="1.5em"),
+            rx.image(src=State.get_prompt_img),
+            rx.heading("Tell DALL-E to recreate this image.", font_size="1em"),
+            rx.heading("You have 50 characters!", font_size="1.5em", color_scheme="ruby"),
             rx.form(
                 rx.vstack(
-                    rx.input(
-                        id="prompt_text",
-                        placeholder="Enter a prompt..",
-                        size="3",
+                    rx.hstack(
+                        rx.input(
+                            id="prompt_text",
+                            placeholder="Enter a prompt..",
+                            size="3",
+                            max_length=50,
+                            on_change=CharacterCount.setCount,
+                        ),
+                        rx.text(
+                            CharacterCount.text
+                        )
                     ),
+                    # rx.input(
+                    #     id="prompt_text",
+                    #     placeholder="Enter a prompt..",
+                    #     size="3",
+                    #     max_length=50
+                    # ),
                     rx.button(
                         "Generate Image",
                         type="submit",
@@ -46,10 +62,13 @@ def game():
                     ),
                 ),
             ),
+            height="30em",
             width="25em",
             bg="white",
             padding="2em",
             align="center",
+            border_radius="2em",
+            spacing="6"
         ),
         width="100%",
         height="100vh",

@@ -5,29 +5,33 @@ def index () -> rx.Component:
     """The Join Page"""
     return rx.center(
         rx.vstack(
-            rx.heading("Prompted.io", font_size="1.5em"),
+            rx.heading("Prompted.io", font_size="2em"),
             rx.form(
                 rx.vstack(
                     rx.input(
                         id="username",
-                        placeholder="Enter your name",
+                        placeholder="Enter your name...",
                         size="3",
                     ),
+                    rx.divider(),
                     rx.button(
                         "Join A Game",
                         type="submit",
                         size="3",
                     ),
                     align="stretch",
-                    spacing="2",
+                    spacing="4",
                 ),
                 width="100%",
                 on_submit=State.join_game,
             ),
+            height="30em",
             width="25em",
             bg="white",
             padding="2em",
             align="center",
+            border_radius="2em",
+            spacing="6"
         ),
         width="100%",
         height="100vh",
