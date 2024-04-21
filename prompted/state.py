@@ -61,7 +61,6 @@ class State(rx.State):
         while True:
             async with self:
                 self.numPlayers = socket.NUM_PLAYERS
-            # time.sleep(1)
 
 
     @rx.background
@@ -77,4 +76,32 @@ class State(rx.State):
                     self.promptImg = socket.PROMPT_IMG
                     yield rx.redirect("/game")
                     break
-            # time.sleep(1)
+
+
+    @rx.background
+    async def submit_prompt(self, prompt):
+        await socket.prompt_submit(prompt)
+        await self.check_image_url()
+        await self.check_gallery()
+
+
+    @rx.background
+    async def check_image_url(self):
+        while True:
+            async with self:
+                if socket.IMG_URL:
+                    self.image_url = socket.IMG_URL
+                    break
+
+
+    @rx.background
+    async def check_gallery(self):
+        while True:
+            async with self:
+                if socket.GALLERY:
+                    self.gallery = socket.GALLERY
+                    break
+
+
+    def get_gallery(self):
+        return self.gallery

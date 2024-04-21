@@ -14,14 +14,16 @@ def game():
     # rand_img = fetch_random_img()
     return rx.center(
         rx.vstack(
-            rx.image(src="/Users/solac/Desktop/LAhacks/Prompted/assetsmqdefault.jpg"),
-            rx.heading("DALL-E", font_size="1.5em"),
+            rx.image(src="/mqdefault.jpg"),
+            rx.heading("Tell DALL-E to recreate this image.", font_size="1.5em"),
+            rx.heading("You have 50 characters!", font_size="2.0em", color_scheme="ruby"),
             rx.form(
                 rx.vstack(
                     rx.input(
                         id="prompt_text",
                         placeholder="Enter a prompt..",
                         size="3",
+                        max_length=50
                     ),
                     rx.button(
                         "Generate Image",

@@ -2,6 +2,7 @@ import reflex as rx
 from prompted.join import index
 from prompted.game import game
 from prompted.lobby import lobby
+from prompted.voting import voting
 
 # Add state and page to the app with Socket.IO client
 app = rx.App(
@@ -10,6 +11,7 @@ app = rx.App(
     ),
 )
 
-app.add_page(index, title="Reflex:Join")
-app.add_page(lobby, title="Reflex:Lobby")
-app.add_page(game, title="Reflex:Game")
+app.add_page(index, title="Reflex: Join")
+app.add_page(lobby, title="Reflex: Lobby")
+app.add_page(game, title="Reflex: Game")
+# app.add_page(voting, title="Reflex: Voting")
