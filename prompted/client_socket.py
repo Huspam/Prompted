@@ -3,8 +3,8 @@ import socketio
 NUM_PLAYERS = 0
 PROMPT_IMG = None
 
-# SERVER_ADDRESS = 'http://13.57.33.95:3001'
-SERVER_ADDRESS = 'http://localhost:3001'
+SERVER_ADDRESS = 'http://13.57.33.95:3001'
+# SERVER_ADDRESS = 'http://localhost:3001'
 
 # Create your SocketIO client instance
 sio = socketio.AsyncClient()
